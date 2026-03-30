@@ -7,6 +7,6 @@ export default defineConfig({
     port: 3000,
   },
   preview: {
-    allowedHosts: 'front-end-production-6da9.up.railway.app',
+    allowedHosts: true,
   },
 })
