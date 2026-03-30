@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    env_file: .env
+
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    command: python -m chat_agent.agent
+    ports:
+      - "8001:8001"
+    env_file: .env
+    environment:
+      - API_URL=http://api:8000
+    depends_on:
+      - api
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - agent
