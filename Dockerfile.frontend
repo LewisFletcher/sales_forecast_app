@@ -7,5 +7,9 @@ RUN npm install
 
 COPY frontend/ .
 
-EXPOSE 3000
-CMD ["npm", "run", "dev", "--", "--host"]
+ARG VITE_AGENT_URL
+ENV VITE_AGENT_URL=$VITE_AGENT_URL
+
+RUN npm run build
+
+CMD ["sh", "-c", "npx vite preview --host --port ${PORT:-4173}"]

@@ -25,6 +25,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.frontend
+      args:
+        - VITE_AGENT_URL=${VITE_AGENT_URL:-http://localhost:8001}
     ports:
       - "3000:3000"
     depends_on:

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 
-const AGENT_URL = 'http://localhost:8001'
+const AGENT_URL = import.meta.env.VITE_AGENT_URL || 'http://localhost:8001'
 
 const INITIAL_MESSAGE = {
   role: 'assistant',

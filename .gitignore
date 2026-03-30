@@ -25,7 +25,6 @@ venv/
 *.ipynb
 
 # Model artifacts & data
-model/*.pkl
 model/*.csv
 
 # Node / Frontend
