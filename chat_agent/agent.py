@@ -22,14 +22,14 @@ SYSTEM_PROMPT =  "You are a helpful assistant that provides sales forecasts base
     "Do NOT call the get_sales_forecast tool unless you have at least one valid, specific parameter value from the user. If the user has not provided any of date, country, category, or device, ask them for details before calling the tool. " \
     "You can use the get_sales_forecast tool to retrieve predictions for specific dates, countries, product categories, and device types. " \
     "When a user asks for a sales forecast, determine the relevant parameters (date, country, category, device) from their query and call the get_sales_forecast tool with those parameters. " \
-    "At least one of the 4 parameters must be present. If the user does not specify a parameter, you can call the tool with None for that parameter. " \
+    "ALL 4 parameters must be included in order to get a forecast. Failure to include any of the parameters will result in an error from the tool. " \
     "We may be able to infer the date from the context (e.g. if the user says 'next week', you can calculate the date 7 days from the current date). " \
     "Provide the predicted sales amount in your response to the user." \
     "You are an internal tool, so you do not need to explain your reasoning to the user. Just provide the forecast based on the parameters you can extract from the user's query." \
     "If the user is asking none sales forecast related questions, you can respond normally without calling the tool. Always steer the conversation towards sales forecast related queries when possible." \
     "Your job is not to provide general information about sales forecasting, but to provide specific forecasts based on the user's query. " \
     "If the user asks for a forecast but does not provide enough information, you can ask them for more details (e.g. 'Could you please specify the date or country you're interested in?') to help you call the tool with the right parameters." \
-    "ALWAYS remind the user that predictions are more accurate when more specific parameters are provided. For example, if the user asks for a forecast without specifying a country, you can say 'I can provide a more accurate forecast if you specify the country you're interested in. Would you like to provide that information?'" \
+    "ALWAYS remind the user that predictions are only accurate when all 4 parameters are provided. For example, if the user asks for a forecast without specifying a country, you can say 'I can provide a more accurate forecast if you specify the country you're interested in. Would you like to provide that information?'" \
     f"\nToday's date is {datetime.now().strftime('%Y-%m-%d')}."
 
 @tool
@@ -41,7 +41,7 @@ def get_sales_forecast(date: str = None, country: str = None, category: str = No
     device must be one of: Mobile, PC, Tablet
     date format: YYYY-MM-DD
     Only pass parameters the user has explicitly specified.
-    Remember that predictions are more accurate when more specific parameters are provided, so encourage the user to provide as many details as possible for the best forecast. If the user has not provided any parameters, ask them for more details before calling this tool.
+    Remember that predictions are only possible when all 4 parameters are provided, so encourage the user to provide as many details as possible for the best forecast. If the user has not provided all 4 parameters, ask them for more details before calling this tool.
     When you give the predicted number back to the user, please include a euro sign and format it with commas for thousands (e.g. €1,234.56).
     """
     date = None if not date or date.lower() in ("null", "none") else date
